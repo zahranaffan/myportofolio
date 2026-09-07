@@ -413,6 +413,102 @@ h1, .brand {
     max-width: 330px;
 }
 
+/* === ACHIEVEMENTS === */
+.achievements {
+    padding: 4rem 0 5rem;
+    border-top: 1px solid var(--line);
+}
+
+.achievements-heading {
+    margin-bottom: 2rem;
+}
+
+.achievements-heading h2 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    line-height: 1;
+}
+
+/* Horizontal scroll */
+.achievements-scroll {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding: 0.75rem 0.5rem 1.5rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line) transparent;
+}
+
+.achievements-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.achievements-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.achievements-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--line);
+    border-radius: 999px;
+}
+
+/* Achievement card */
+.achievement-card {
+    flex: 0 0 440px;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    scroll-snap-align: start;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+    box-shadow: 6px 6px 0 var(--accent);
+}
+
+/* Dua foto dengan ukuran sama */
+.achievement-images {
+    height: 240px;
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.6rem;
+    background-color: var(--line);
+}
+
+.achievement-images img {
+    width: calc(50% - 0.3rem);
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+}
+
+/* Achievement content */
+.achievement-content {
+    padding: 1.3rem 1.4rem 1.5rem;
+}
+
+.achievement-type {
+    margin-bottom: 0.45rem;
+    color: var(--accent-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.achievement-content h3 {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 1.4rem;
+    line-height: 1.1;
+}
 
 /* === PENYESUAIAN MOBILE === */
 @media (max-width: 600px) {
@@ -447,5 +543,17 @@ h1, .brand {
 
     .social-links {
         justify-content: flex-start;
+    }
+
+    .achievements {
+        padding: 3.5rem 0 4rem;
+    }
+
+    .achievement-card {
+        flex-basis: 330px;
+    }
+
+    .achievement-images {
+        height: 200px;
     }
 }
