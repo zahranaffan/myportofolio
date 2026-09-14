@@ -24,3 +24,26 @@ class Experience(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+
+class Achievement(models.Model):
+    ACHIEVEMENT_CHOICES = [
+        ('1st', '1st Place'),
+        ('2nd', '2nd Place'),
+        ('3rd', '3rd Place'),
+        ('finalist', 'Finalist'),
+    ]
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    year = models.IntegerField()
+    organization = models.CharField(max_length=255)
+    category = models.CharField(
+        max_length=10,
+        choices=ACHIEVEMENT_CHOICES,
+        default='finalist'
+    )
+    photo = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title

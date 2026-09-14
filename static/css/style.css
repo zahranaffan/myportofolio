@@ -140,16 +140,16 @@ h1, .brand {
 
 .cute-cat {
     position: absolute;
-    top: 26px;
+    top: 0px;
 
     /* mengikuti sisi kanan container */
-    right: max(1.5rem, calc((100% - 960px) / 2 + 7rem));
+    right: max(1.5rem, calc((100% - 960px) / 2 + 5rem));
 
     z-index: 20;
 }
 
 .cute-cat img {
-    width: 70px;
+    width: 110px;
     height: auto;
     display: block;
 }
