@@ -26,6 +26,13 @@ body {
         #72D572 100%
     );
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 h1, .brand {
