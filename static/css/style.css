@@ -102,6 +102,7 @@ h1, .brand {
 
 .hero {
     padding: 4.5rem 0 5rem;
+    position: relative;
 }
 
 .hero-grid {
@@ -133,14 +134,17 @@ h1, .brand {
 
     padding: 2.5rem 3rem;
 
-    overflow: visible;
+    overflow: hidden;
     position: relative;
 }
 
 .cute-cat {
     position: absolute;
-    top: -45px;
-    right: 90px;
+    top: 26px;
+
+    /* mengikuti sisi kanan container */
+    right: max(1.5rem, calc((100% - 960px) / 2 + 7rem));
+
     z-index: 20;
 }
 
@@ -155,7 +159,7 @@ h1, .brand {
 
     width: auto;
     margin-left: -3rem;
-    margin-right: -2.3rem;
+    margin-right: -3rem;
     margin-top: -2.5rem;
 
     box-sizing: border-box;
@@ -781,19 +785,40 @@ h1, .brand {
             "details";
     }
 
-.window-bar {
-    width: calc(100% + 6rem);
-    margin-left: -3rem;
-    margin-top: -2.5rem;
-}
-
     .hero-photo {
-        width: 375px;
-        max-width: none;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .avatar {
+        width: 100%;
+        height: auto;
     }
 
     .social-links {
         justify-content: flex-start;
+    }
+
+    .site-header .container {
+        min-width: 0;
+    }
+
+    .brand {
+        min-width: 0;
+        max-width: 55%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .site-header nav {
+        flex-shrink: 0;
+        gap: 0.15rem;
+    }
+
+    .site-header nav a {
+        padding: 0.45rem 0.55rem;
+        font-size: 0.8rem;
     }
 
     .achievements {
