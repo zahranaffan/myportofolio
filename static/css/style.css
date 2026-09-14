@@ -14,17 +14,21 @@
     --radius: 4px;
 }
 
+@font-face {
+    font-family: "PublicPixel";
+    src: url("/static/font/PublicPixel.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 body {
+    margin: 0;
+    background-image: url("/static/img/my_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--ink);
-    background: linear-gradient(
-        105deg,
-        #4CC9F0 0%,
-        #C8F7FF 32%,
-        #FFFFFF 52%,
-        #C8F7DC 75%,
-        #72D572 100%
-    );
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -36,7 +40,7 @@ main {
 }
 
 h1, .brand {
-    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-family: "PublicPixel", sans-serif;
 }
 
 .container {
@@ -46,18 +50,23 @@ h1, .brand {
 }
 
 .site-header {
-    background: linear-gradient(
-    180deg,
-    #4AA6CE 0%,
-    #1679A8 20%,
-    #07547F 60%,
-    #06466D 100%
-    );
-    border-bottom: 2px solid rgba(255, 255, 255, 0.45);
+    background:
+        linear-gradient(
+            to bottom,
+            #4fbf9f 0%,
+            #319fae 22%,
+            #197fa7 48%,
+            #096394 72%,
+            #07517d 100%
+        );
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.65);
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.55),
-        inset 0 2px 8px rgba(255, 255, 255, 0.12);
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 2px 8px rgba(255, 255, 255, 0.2),
+        inset 0 -3px 6px rgba(0, 40, 60, 0.4),
+        0 5px 14px rgba(0, 45, 65, 0.4);
 }
 
 .site-header .container {
@@ -192,7 +201,7 @@ h1, .brand {
     border-radius: 30px 30px 0 0;
 
     color: white;
-    font-size: 0.8rem;
+    font-size: 1.15rem;
     font-weight: 700;
 
     box-shadow:
@@ -207,8 +216,8 @@ h1, .brand {
 
 .window-icon {
     position: relative;
-    width: 16px;
-    height: 12px;
+    width: 25px;
+    height: 15px;
 
     background: linear-gradient(
         180deg,
@@ -228,7 +237,7 @@ h1, .brand {
     top: -4px;
     left: 1px;
 
-    width: 7px;
+    width: 15px;
     height: 4px;
 
     background: #ffd84d;
@@ -293,8 +302,8 @@ h1, .brand {
 }
 
 .hero-identity h1 {
-    font-size: clamp(3rem, 7vw, 5rem);
-    line-height: 0.95;
+    font-size: clamp(1.5rem, 5vw, 3.3rem);
+    line-height: 1.3;
 }
 
 .bio {
@@ -807,25 +816,31 @@ h1, .brand {
     }
 
     .site-header .container {
+        display: flex;
+        align-items: center;
         min-width: 0;
+        gap: 0.5rem;
     }
 
     .brand {
+        flex: 1;
         min-width: 0;
-        max-width: 55%;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
     }
 
     .site-header nav {
+        display: flex;
         flex-shrink: 0;
-        gap: 0.15rem;
+        gap: 0.1rem;
+        min-width: 0;
     }
 
     .site-header nav a {
-        padding: 0.45rem 0.55rem;
-        font-size: 0.8rem;
+        padding: 0.35rem 0.3rem;
+        font-size: 0.7rem;
+        white-space: nowrap;
     }
 
     .achievements {
