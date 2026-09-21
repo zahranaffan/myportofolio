@@ -96,3 +96,4 @@ def show_achievement(request):
         "achievement_list": Achievement.objects.all(),
     }
     return render(request, "achievement.html", context)
+
