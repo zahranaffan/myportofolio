@@ -129,3 +129,13 @@ def update_achievement(request, achievement_id):
 
     return render(request, "achievement_form.html", context)
 
+def delete_achievement(request, achievement_id):
+    achievement = get_object_or_404(Achievement, pk=achievement_id)
+
+    if request.method == "POST":
+        achievement.delete()
+        messages.success(request, "Achievement berhasil dihapus!")
+        return redirect("main:show_achievement")
+
+    return redirect("main:show_achievement")
+
