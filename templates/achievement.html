@@ -36,6 +36,14 @@
                                 {{ achievement.organization }}
                                 — {{ achievement.year }}
                             </p>
+                            <div class="project-card-actions">
+                                <div class="project-actions">
+                                    <a href="{% url 'main:update_achievement' achievement.id %}"
+                                    class="button">
+                                        Edit
+                                    </a>
+                                </div>
+                            </div>
                         </article>
                     {% empty %}
                         <p class="empty-state">

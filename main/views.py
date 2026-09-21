@@ -109,6 +109,23 @@ def create_achievement(request):
         "name": "Muhammad Zahran Affan",
         "form": form,
     }
+    return render(request, "achievement_form.html", context)
+
+def update_achievement(request, achievement_id):
+    achievement = get_object_or_404(Achievement, pk=achievement_id)
+
+    form = AchievementForm(request.POST or None, instance=achievement)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Achievement berhasil diperbarui!")
+        return redirect("main:show_achievement")
+
+    context = {
+        "name": "Muhammad Zahran Affan",
+        "form": form,
+        "achievement": achievement,
+    }
 
     return render(request, "achievement_form.html", context)
 

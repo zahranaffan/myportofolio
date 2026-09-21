@@ -9,6 +9,7 @@ from main.views import (
     update_experience,
     show_achievement,
     create_achievement,
+    update_achievement,
 )
 
 app_name = "main"
@@ -22,4 +23,5 @@ urlpatterns = [
     path("experience/<uuid:experience_id>/edit/", update_experience, name="update_experience"),
     path('achievement/', show_achievement, name='show_achievement'),
     path("achievement/add/", create_achievement, name="create_achievement"),
+    path("achievement/<uuid:achievement_id>/edit/", update_achievement, name="update_achievement"),
 ]
