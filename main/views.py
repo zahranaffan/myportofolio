@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from main.models import Experience, Achievement
-from main.forms import ExperienceForm
+from main.forms import ExperienceForm, AchievementForm
 
 
 def show_main(request):
@@ -96,4 +96,19 @@ def show_achievement(request):
         "achievement_list": Achievement.objects.all(),
     }
     return render(request, "achievement.html", context)
+
+def create_achievement(request):
+    form = AchievementForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Achievement berhasil ditambahkan!")
+        return redirect("main:show_achievement")
+
+    context = {
+        "name": "Muhammad Zahran Affan",
+        "form": form,
+    }
+
+    return render(request, "achievement_form.html", context)
 

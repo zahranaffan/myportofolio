@@ -9,16 +9,32 @@
         <section class="experience-section" id="achievements">
             <div class="container">
                 <p class="section-kicker">Pencapaian saya sejauh ini</p>
-                <h1>Achievements</h1>
-                <div class="experience-grid">
+                <div class="project-header">
+                    <h1>Achievements</h1>
+                    <a href="{% url 'main:create_achievement' %}"
+                        class="button project-add-button">
+                        <span aria-hidden="true">+</span>
+                        Tambah Achievement
+                    </a>
+                </div>
+                <div class="experience-grid project-grid">
                     {% for achievement in achievement_list %}
                         <article class="experience-card">
+                            {% if achievement.photo %}
+                                <img src="{{ achievement.photo }}"
+                                    alt="Gambar {{ achievement.title }}"
+                                    class="project-image">
+                            {% endif %}
                             <span class="experience-category">
                                 {{ achievement.get_category_display }}
                             </span>
                             <h2>{{ achievement.title }}</h2>
                             <p class="experience-description">
                                 {{ achievement.description }}
+                            </p>
+                            <p class="experience-status">
+                                {{ achievement.organization }}
+                                — {{ achievement.year }}
                             </p>
                         </article>
                     {% empty %}

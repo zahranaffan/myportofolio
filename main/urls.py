@@ -1,6 +1,15 @@
 from django.urls import path
 
-from main.views import show_main, show_experience, show_achievement, create_experience, get_experience_json, delete_experience, update_experience
+from main.views import (
+    show_main,
+    show_experience,
+    create_experience,
+    get_experience_json,
+    delete_experience,
+    update_experience,
+    show_achievement,
+    create_achievement,
+)
 
 app_name = "main"
 
@@ -12,4 +21,5 @@ urlpatterns = [
     path("experience/<uuid:experience_id>/delete/", delete_experience, name="delete_experience"),
     path("experience/<uuid:experience_id>/edit/", update_experience, name="update_experience"),
     path('achievement/', show_achievement, name='show_achievement'),
+    path("achievement/add/", create_achievement, name="create_achievement"),
 ]
