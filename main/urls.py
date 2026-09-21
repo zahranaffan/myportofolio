@@ -11,6 +11,7 @@ from main.views import (
     create_achievement,
     update_achievement,
     delete_achievement,
+    get_achievement_json,
 )
 
 app_name = "main"
@@ -26,4 +27,5 @@ urlpatterns = [
     path("achievement/add/", create_achievement, name="create_achievement"),
     path("achievement/<uuid:achievement_id>/edit/", update_achievement, name="update_achievement"),
     path("achievement/<uuid:achievement_id>/delete/", delete_achievement, name="delete_achievement"),
+    path("api/achievement/", get_achievement_json, name="get_achievement_json"),
 ]

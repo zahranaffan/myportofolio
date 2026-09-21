@@ -91,9 +91,21 @@ def delete_experience(request, experience_id):
     return redirect("main:show_experience")
 
 def show_achievement(request):
+    json_response = get_achievement_json(request)
+
+    achievements = serializers.deserialize(
+        "json",
+        json_response.content.decode("utf-8"),
+    )
+
+    achievements = [achievement.object for achievement in achievements]
+
+    title_query = request.GET.get("title", "").strip()
+
     context = {
         "name": "Muhammad Zahran Affan",
-        "achievement_list": Achievement.objects.all(),
+        "achievement_list": achievements,
+        "title_query": title_query,
     }
     return render(request, "achievement.html", context)
 
@@ -138,4 +150,16 @@ def delete_achievement(request, achievement_id):
         return redirect("main:show_achievement")
 
     return redirect("main:show_achievement")
+
+def get_achievement_json(request):
+    title_query = request.GET.get("title", "").strip()
+
+    achievements = Achievement.objects.all()
+
+    if title_query:
+        achievements = achievements.filter(title__icontains=title_query)
+
+    achievements_json = serializers.serialize("json", achievements)
+
+    return HttpResponse(achievements_json, content_type="application/json")
 
