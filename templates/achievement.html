@@ -17,6 +17,17 @@
                         Tambah Achievement
                     </a>
                 </div>
+                <form method="get"
+                    action="{% url 'main:show_achievement' %}"
+                    class="project-search">
+                    <input type="search"
+                        name="title"
+                        value="{{ title_query }}"
+                        placeholder="Cari berdasarkan nama achievement"
+                        class="project-search__input"
+                        aria-label="Cari berdasarkan nama achievement">
+                    <button type="submit" class="button">Cari</button>
+                </form>
                 <div class="experience-grid project-grid">
                     {% for achievement in achievement_list %}
                         <article class="experience-card">
@@ -49,9 +60,15 @@
                             </div>
                         </article>
                     {% empty %}
-                        <p class="empty-state">
-                            Belum ada achievement yang ditambahkan.
-                        </p>
+                        {% if title_query %}
+                            <p class="empty-state">
+                                Tidak ada achievement dengan nama tersebut.
+                            </p>
+                        {% else %}
+                            <p class="empty-state">
+                                Belum ada achievement yang ditambahkan.
+                            </p>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
