@@ -66,7 +66,7 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def update_experience(request, experience_id):
-    if not request.user.is_superuser:
+    if not request.user.has_perm('main.change_experience'):
         raise PermissionDenied
 
     experience = get_object_or_404(Experience, pk=experience_id)
@@ -161,7 +161,7 @@ def create_achievement(request):
 
 @login_required(login_url="/login/")
 def update_achievement(request, achievement_id):
-    if not request.user.is_superuser:
+    if not request.user.has_perm('main.change_achievement'):
         raise PermissionDenied
     achievement = get_object_or_404(Achievement, pk=achievement_id)
 
