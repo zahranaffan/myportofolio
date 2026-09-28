@@ -1,6 +1,8 @@
 from django.forms import ModelForm, TextInput, Textarea, URLInput, DateTimeInput, NumberInput, Select
 from main.models import Experience, Achievement
 
+from django.core.exceptions import ValidationError
+from django.utils.html import strip_tags
 
 class ExperienceForm(ModelForm):
     class Meta:
@@ -46,6 +48,21 @@ class ExperienceForm(ModelForm):
                 }
             ),
         }
+
+    def clean_title(self):
+        title = strip_tags(self.cleaned_data["title"]).strip()
+        if not title:
+            raise ValidationError("Judul pengalaman tidak boleh hanya berisi tag HTML.")
+        return title
+
+    def clean_description(self):
+        description = strip_tags(self.cleaned_data["description"]).strip()
+        if not description:
+            raise ValidationError("Deskripsi pengalaman tidak boleh hanya berisi tag HTML.")
+        return description
+
+    def clean_thumbnail(self):
+        return strip_tags(self.cleaned_data["thumbnail"]).strip()
 
 class AchievementForm(ModelForm):
     class Meta:
