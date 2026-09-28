@@ -46,3 +46,12 @@ a. Aku masih bingung ModelForm itu sebenarnya ngaruh ke mana dan kenapa kita har
 b. Aku sudah bikin get_achievement_json, sekarang setelah JSON-nya berhasil keluar aku harus ngapain supaya data Achievement tetap bisa ditampilkan di halaman seperti sebelumnya?
 
 c. Aku punya fitur Experience yang sudah menggunakan CRUD dan JSON. Sekarang Tugas 3 meminta aku menerapkan hal yang sama ke Achievement. Bisa bantu jelasin step by step bagian mana yang perlu ditambahkan tanpa mengubah kode yang tidak diperlukan?
+
+## Tugas 4
+AI Disclosure
+
+Dalam pengerjaan proyek ini, saya menggunakan ChatGPT sebagai AI tool untuk membantu proses belajar, memahami konsep, dan melakukan debugging. Saya menggunakan AI untuk mempelajari konsep Django pada Tutorial 4, khususnya mengenai authentication dan authorization, penggunaan Django Group dan Permission, pembatasan akses pada sisi server (server-side check), serta pengaturan tampilan tombol atau kontrol berdasarkan hak akses pengguna. Saya juga berdiskusi ketika menemukan bug atau bagian kode yang belum saya pahami, seperti perbedaan antara is_superuser, is_staff, Group, dan Permission, penggunaan related_name pada ManyToManyField, serta penerapan permission pada view dan template.
+
+Pada implementasi Tugas 4, AI membantu saya memahami cara menerapkan mekanisme hak akses pada module Achievement, termasuk membatasi akses terhadap fungsi create, update, dan delete berdasarkan peran pengguna. AI juga membantu saya memahami penerapan role Editor menggunakan Django Group, pemberian permission melalui Django Admin, serta penggunaan permission seperti add, change, dan delete pada sisi server. Selain itu, AI membantu dalam proses debugging ketika terdapat konflik related_name pada relasi ManyToManyField antara model Experience dan Achievement, serta ketika pengguna dengan role Editor belum dapat mengakses fitur update karena pemeriksaan sebelumnya masih menggunakan is_superuser.
+
+Strategi prompting yang saya gunakan umumnya berupa pertanyaan eksploratif, seperti meminta penjelasan konsep dari dasar, menanyakan hubungan antarbagian kode, menanyakan penyebab suatu error dan bukan hanya solusinya, serta meminta penyesuaian implementasi berdasarkan kode yang sudah saya buat. Saya juga menggunakan AI untuk membandingkan perilaku hak akses dari beberapa peran pengguna dan memahami alasan penggunaan pemeriksaan permission tertentu pada setiap fungsi.
