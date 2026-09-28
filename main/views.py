@@ -141,7 +141,11 @@ def show_achievement(request):
     }
     return render(request, "achievement.html", context)
 
+@login_required(login_url="/login/")
 def create_achievement(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
     form = AchievementForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
@@ -155,7 +159,10 @@ def create_achievement(request):
     }
     return render(request, "achievement_form.html", context)
 
+@login_required(login_url="/login/")
 def update_achievement(request, achievement_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     achievement = get_object_or_404(Achievement, pk=achievement_id)
 
     form = AchievementForm(request.POST or None, instance=achievement)
@@ -173,7 +180,10 @@ def update_achievement(request, achievement_id):
 
     return render(request, "achievement_form.html", context)
 
+@login_required(login_url="/login/")
 def delete_achievement(request, achievement_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     achievement = get_object_or_404(Achievement, pk=achievement_id)
 
     if request.method == "POST":

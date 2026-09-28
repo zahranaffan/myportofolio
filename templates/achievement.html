@@ -11,11 +11,13 @@
                 <p class="section-kicker">Pencapaian saya sejauh ini</p>
                 <div class="project-header">
                     <h1>Achievements</h1>
-                    <a href="{% url 'main:create_achievement' %}"
-                        class="button project-add-button">
-                        <span aria-hidden="true">+</span>
-                        Tambah Achievement
-                    </a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_achievement' %}"
+                            class="button project-add-button">
+                            <span aria-hidden="true">+</span>
+                            Tambah Achievement
+                        </a>
+                    {% endif %}
                 </div>
                 <form method="get"
                     action="{% url 'main:show_achievement' %}"
@@ -49,13 +51,13 @@
                             </p>
                             <div class="project-card-actions">
                                 <div class="project-actions">
+                                    {% if user.is_superuser %}
                                     <a href="{% url 'main:update_achievement' achievement.id %}"
                                     class="button">
                                         Edit
                                     </a>
-
                                     {% include "components/achievement_delete_modal.html" with achievement=achievement %}
-
+                                    {% endif %}
                                 </div>
                             </div>
                         </article>
