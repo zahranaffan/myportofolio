@@ -51,6 +51,7 @@
                             </p>
                             <div class="project-card-actions">
                                 <div class="project-actions">
+                                    {% include "components/achievement_star.html" with achievement=achievement %}
                                     {% if user.is_superuser %}
                                     <a href="{% url 'main:update_achievement' achievement.id %}"
                                     class="button">
