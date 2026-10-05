@@ -155,20 +155,10 @@ def create_experience_ajax(request):
     return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 def show_achievement(request):
-    json_response = get_achievement_json(request)
-
-    achievements = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-
-    achievements = [achievement.object for achievement in achievements]
-
     title_query = request.GET.get("title", "").strip()
 
     context = {
         "name": "Muhammad Zahran Affan",
-        "achievement_list": achievements,
         "title_query": title_query,
     }
     return render(request, "achievement.html", context)
@@ -227,15 +217,34 @@ def delete_achievement(request, achievement_id):
 
 def get_achievement_json(request):
     title_query = request.GET.get("title", "").strip()
-
-    achievements = Achievement.objects.all()
+    achievements = Achievement.objects.prefetch_related('starred_by').all()
 
     if title_query:
         achievements = achievements.filter(title__icontains=title_query)
 
-    achievements_json = serializers.serialize("json", achievements, use_natural_foreign_keys=True)
+    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
+    data = []
+    for achievement in achievements:
+        starred_users = achievement.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
 
-    return HttpResponse(achievements_json, content_type="application/json")
+        data.append({
+            "pk": str(achievement.id),
+            "fields": {
+                "title": achievement.title,
+                "description": achievement.description,
+                "year": achievement.year,
+                "organization": achievement.organization,
+                "category": achievement.category,
+                "photo": achievement.photo,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def toggle_star_achievement(request, achievement_id):
