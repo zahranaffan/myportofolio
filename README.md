@@ -28,8 +28,11 @@ AI Disclosure: Saya menggunakan ChatGPT sebagai tools untuk belajar, diskusi, da
 3. makemigrations digunakan untuk membuat file migrasi berdasarkan perubahan yang dilakukan pada model, sedangkan migrate digunakan untuk menerapkan perubahan tersebut ke database. Contohnya, kalau pada model kita menambahkan field baru seperti description pada data portofolio, kita perlu menjalankan python manage.py makemigrations untuk membuat instruksi perubahan database, kemudian baru python manage.py migrate untuk benar-benar menerapkan perubahan tersebut ke database.
 
 AI Disclosure: Dalam pengerjaan proyek ini, saya menggunakan ChatGPT sebagai AI tool untuk membantu proses belajar, memahami konsep, dan melakukan debugging. Saya menggunakan AI untuk mempelajari konsep Django seperti hubungan urls.py, view, model, template, serta makemigrations dan migrate, kemudian berdiskusi ketika menemukan bug seperti TemplateSyntaxError, masalah static files, dan tampilan responsive pada ukuran layar yang berbeda (terutama ketika layarnya diubah-ubah ukurannya). Pada bagian CSS, AI juga membantu saya memahami penggunaan @font-face, font-family, clamp(), line-height, gradient, shadow, dan liquid glass. Pada CSS tersebut, saya minta bantuan AI utk menemukan kombinasi warna yang pas, cara masukin font di css, dan masalah perubahan layout. Strategi prompting yang saya gunakan umumnya berupa pertanyaan eksploratif, seperti meminta penjelasan konsep dari dasar, menanyakan penyebab suatu error dan bukan hanya solusinya, serta meminta analisis terhadap bagian kode yang menyebabkan masalah. Saya tetap melakukan implementasi, pengujian, dan penyesuaian kode secara mandiri berdasarkan pemahaman yang diperoleh dari diskusi dengan AI. Beberapa contoh prompt dan percakapan dengan AI disertakan sebagai chat/log prompting untuk menunjukkan penggunaannya selama proses pengerjaan.
+
 a. “Kenapa pas aku kecilin ukuran layar, navbar-ku malah keluar dari layar? Aku maunya tombol Profile, Experience, sama Achievement tetap satu baris dan ikut bergeser/menyesuaikan ruang. Dari CSS ini kira-kira apa yang bikin begitu?”
+
 b. “Aku baru nambah my_background.jpg ke folder static tapi background-nya nggak berubah. Padahal nama filenya udah benar. Bisa bantu cek kemungkinan masalahnya dari path CSS atau ada kode background lain yang malah menimpa?”
+
 c. “Aku masih bingung, sebenarnya alur Django dari user buka halaman sampai data dari database muncul di browser itu gimana? Bisa jelasin hubungan urls.py project, urls.py app, view, model, sama template dari awal? terus kenapa datanya ga keliatan di pws, padahal di lokal ada?”
 
 ## Tugas 3
@@ -55,3 +58,18 @@ Dalam pengerjaan proyek ini, saya menggunakan ChatGPT sebagai AI tool untuk memb
 Pada implementasi Tugas 4, AI membantu saya memahami cara menerapkan mekanisme hak akses pada module Achievement, termasuk membatasi akses terhadap fungsi create, update, dan delete berdasarkan peran pengguna. AI juga membantu saya memahami penerapan role Editor menggunakan Django Group, pemberian permission melalui Django Admin, serta penggunaan permission seperti add, change, dan delete pada sisi server. Selain itu, AI membantu dalam proses debugging ketika terdapat konflik related_name pada relasi ManyToManyField antara model Experience dan Achievement, serta ketika pengguna dengan role Editor belum dapat mengakses fitur update karena pemeriksaan sebelumnya masih menggunakan is_superuser.
 
 Strategi prompting yang saya gunakan umumnya berupa pertanyaan eksploratif, seperti meminta penjelasan konsep dari dasar, menanyakan hubungan antarbagian kode, menanyakan penyebab suatu error dan bukan hanya solusinya, serta meminta penyesuaian implementasi berdasarkan kode yang sudah saya buat. Saya juga menggunakan AI untuk membandingkan perilaku hak akses dari beberapa peran pengguna dan memahami alasan penggunaan pemeriksaan permission tertentu pada setiap fungsi.
+
+## Tugas 5
+1. Debouncing adalah teknik untuk menunda pencarian sampai pengguna berhenti mengetik selama beberapa saat. Ini penting supaya AJAX tidak mengirim request setiap kali satu karakter diketik sehingga request ke server lebih sedikit dan pencarian lebih efisien.
+
+2. await digunakan untuk menunggu hasil dari fetch() sebelum kode berikutnya dijalankan. Karena fetch() berjalan secara asynchronous, tanpa await hasilnya masih berupa Promise sehingga kita belum bisa langsung menggunakan response-nya seperti membaca response.json() atau mengecek response.ok. Dengan await, kode akan menunggu sampai request selesai sehingga hasil response bisa langsung diproses.
+
+3. XSS adalah serangan ketika data yang dimasukkan pengguna mengandung kode berbahaya yang kemudian dijalankan di browser. Pada AJAX, data JSON biasanya dimasukkan ke HTML menggunakan JavaScript, jadi kita perlu melakukan escaping secara manual agar data tersebut tidak dianggap sebagai kode oleh browser.
+
+AI Disclosure: Dalam pengerjaan tugas ini, saya menggunakan ChatGPT sebagai AI tool untuk membantu memahami konsep dan melakukan debugging. AI digunakan untuk mempelajari penerapan AJAX, debouncing, penggunaan fetch dan await, keamanan XSS dengan escapeHtml dan strip_tags, serta membantu menyesuaikan implementasi fitur dari Project ke Achievement. Saya juga menggunakan AI ketika menemukan error atau bagian kode yang belum dipahami, lalu melakukan implementasi, pengujian, dan penyesuaian kode secara mandiri berdasarkan hasil diskusi tersebut. Beberapa contoh prompt yang digunakan selama pengerjaan adalah:
+
+a. “Tolong jelaskan konsep debouncing dan kenapa diperlukan pada AJAX.”
+
+b. “Tolong sesuaikan kode get_projects_json ini menjadi versi Achievement.”
+
+c. “Bagian mana saja yang perlu menggunakan escapeHtml pada kode Achievement saya?”
