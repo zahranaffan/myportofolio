@@ -86,6 +86,16 @@
             gridContainer.classList.toggle('hide', !showGrid);
         }
 
+        // Mengubah karakter khusus HTML menjadi entity agar ditampilkan sebagai teks
+            function escapeHtml(value) {
+                return String(value ?? '')
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#39;');
+            }
+
         // Membuat elemen card achievement
         function buildAchievementCardElement(item) {
             const achievement = item.fields;
@@ -95,8 +105,8 @@
             articleElement.className = 'experience-card';
 
             const imageHtml = achievement.photo
-                ? `<img src="${achievement.photo}"
-                        alt="Gambar ${achievement.title}"
+                ? `<img src="${escapeHtml(achievement.photo)}"
+                        alt="Gambar ${escapeHtml(achievement.title)}"
                         class="project-image">`
                 : '';
 
@@ -143,21 +153,21 @@
                 : "Star";
 
             const starTitle = achievement.star_count > 0
-                ? `Dibintangi oleh ${achievement.starred_by_names}`
+                ? `Dibintangi oleh ${escapeHtml(achievement.starred_by_names)}`
                 : "Jadilah yang pertama memberi star";
 
             // Komponen card
             const completeCardHtml = `
                 ${imageHtml}
 
-                <h2>${achievement.title}</h2>
+                <h2>${escapeHtml(achievement.title)}</h2>
 
                 <span class="experience-category">
-                    ${achievement.category}
+                    ${escapeHtml(achievement.category)}
                 </span>
 
                 <p class="experience-description">
-                    ${achievement.description}
+                    ${escapeHtml(achievement.description)}
                 </p>
 
                 <div class="project-card-actions">
