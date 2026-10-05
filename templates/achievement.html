@@ -64,6 +64,8 @@
         const gridContainer = document.getElementById('grid');
         const searchForm = document.getElementById('achievement-search-form');
         const searchInput = document.getElementById('search-input');
+        const SEARCH_DEBOUNCE_DELAY = 300;
+        let searchDebounceTimer;
 
         // Menyembunyikan/Menampilkan section halaman
         function displayPageSection({
@@ -218,11 +220,22 @@
             }
         }
 
-        // Event Handlers untuk Form Search
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
+        function searchAchievements() {
             fetchAchievements(searchInput.value.trim());
+        }
+
+        searchInput.addEventListener("input", function() {
+            clearTimeout(searchDebounceTimer);
+
+            searchDebounceTimer = setTimeout(function() {
+                searchAchievements();
+            }, SEARCH_DEBOUNCE_DELAY);
+        });
+
+        searchForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            clearTimeout(searchDebounceTimer);
+            searchAchievements();
         });
 
         // Start application
