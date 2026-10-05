@@ -60,6 +60,7 @@
         // Konfigurasi
         const BASE_ACHIEVEMENTS_ENDPOINT = "{% url 'main:get_achievement_json' %}";
         const IS_SUPERUSER = "{{ user.is_superuser|yesno:'true,false' }}" === "true";
+        const IS_EDITOR = "{{ perms.main.change_achievement|yesno:'true,false' }}" === "true";
         let achievementsAbortController;
 
         // Elemen DOM
@@ -106,6 +107,12 @@
                     achievementId
                 );
 
+            const editUrl = "{% url 'main:update_achievement' '00000000-0000-0000-0000-000000000000' %}"
+                .replace(
+                    '00000000-0000-0000-0000-000000000000',
+                    achievementId
+                );
+
             const starUrl = "{% url 'main:toggle_star_achievement' '00000000-0000-0000-0000-000000000000' %}"
                 .replace(
                     '00000000-0000-0000-0000-000000000000',
@@ -121,6 +128,10 @@
                         Hapus
                     </button>
                 </form>`
+                : '';
+
+            const editHtml = IS_EDITOR
+                ? `<a href="${editUrl}" class="button">Edit</a>`
                 : '';
 
             const isStarredClass = achievement.is_starred
@@ -167,6 +178,7 @@
                             </button>
                         </form>
 
+                        ${editHtml}
                         ${deleteHtml}
 
                     </div>
