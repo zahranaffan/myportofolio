@@ -12,13 +12,13 @@
                 <div class="project-header">
                     <h1>Experience</h1>
                     {% if user.is_superuser %}
-                    <button type="button"
-                            class="button project-add-button"
-                            popovertarget="add-experience-modal">
-                        <span aria-hidden="true">+</span>
-                        Tambah Experience
-                    </button>
-                {% endif %}
+                        <button type="button"
+                                class="button project-add-button"
+                                popovertarget="add-experience-modal">
+                            <span aria-hidden="true">+</span>
+                            Tambah Experience
+                        </button>
+                    {% endif %}
                 </div>
 
                 <form id="experience-search-form" class="project-search">
@@ -158,9 +158,6 @@
                 return articleElement;
             }
 
-            function closeExperienceModal() {
-                document.getElementById("add-experience-modal").hidePopover();
-            }
             // Fetch data experience
             async function fetchExperiences(searchQuery = "") {
                 if (experiencesAbortController) experiencesAbortController.abort();
@@ -276,10 +273,14 @@
                 }
             }
 
-    if (experienceForm) {
-        experienceForm.addEventListener('submit', addExperience);
-    }
+            function closeExperienceModal() {
+                document.getElementById("add-experience-modal").hidePopover();
+            }
 
+            if (experienceForm) {
+                experienceForm.addEventListener('submit', addExperience);
+            }
+            
             // Start application
             fetchExperiences(searchInput.value.trim());
         </script>

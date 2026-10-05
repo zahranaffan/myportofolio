@@ -160,6 +160,7 @@ def show_achievement(request):
     context = {
         "name": "Muhammad Zahran Affan",
         "title_query": title_query,
+        "form": AchievementForm(),
     }
     return render(request, "achievement.html", context)
 

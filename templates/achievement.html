@@ -12,11 +12,12 @@
                 <div class="project-header">
                     <h1>Achievements</h1>
                     {% if user.is_superuser %}
-                        <a href="{% url 'main:create_achievement' %}"
-                            class="button project-add-button">
+                        <button type="button"
+                                class="button project-add-button"
+                                popovertarget="add-achievement-modal">
                             <span aria-hidden="true">+</span>
                             Tambah Achievement
-                        </a>
+                        </button>
                     {% endif %}
                 </div>
                 <form id="achievement-search-form" class="project-search">
@@ -50,6 +51,10 @@
             </div>
         </section>
     </main>
+
+    {% if user.is_superuser %}
+        {% include "components/achievement_form_modal.html" %}
+    {% endif %}
 
     <script>
         // Konfigurasi
@@ -238,6 +243,9 @@
             searchAchievements();
         });
 
+        function closeAchievementModal() {
+            document.getElementById("add-achievement-modal").hidePopover();
+        }
         // Start application
         fetchAchievements(searchInput.value.trim());
     </script>
