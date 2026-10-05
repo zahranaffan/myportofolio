@@ -19,6 +19,7 @@ urlpatterns = [
     path("achievement/<uuid:achievement_id>/delete/", views.delete_achievement, name="delete_achievement"),
     path("api/achievement/", views.get_achievement_json, name="get_achievement_json"),
     path("achievement/<uuid:achievement_id>/star/", views.toggle_star_achievement, name="toggle_star_achievement"),
+    path("achievement/add-ajax/", views.create_achievement_ajax, name="create_achievement_ajax"),
     path("register/", views.register, name="register"),
     path("login/", views.login_user, name="login"),
     path("logout/", views.logout_user, name="logout"),
