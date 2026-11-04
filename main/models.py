@@ -27,26 +27,18 @@ class Experience(models.Model):
     def is_ongoing(self):
         return self.ended_at is None
 
-class Achievement(models.Model):
-    ACHIEVEMENT_CHOICES = [
-        ('1st', '1st Place'),
-        ('2nd', '2nd Place'),
-        ('3rd', '3rd Place'),
-        ('finalist', 'Finalist'),
-    ]
-
+class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    year = models.IntegerField()
-    organization = models.CharField(max_length=255)
-    category = models.CharField(
-        max_length=10,
-        choices=ACHIEVEMENT_CHOICES,
-        default='finalist'
+    tech_stack = models.CharField(max_length=255)
+    project_url = models.URLField(blank=True)
+    project_image_url = models.URLField(blank=True)
+    starred_by = models.ManyToManyField(
+        User,
+        related_name="starred_projects",
+        blank=True,
     )
-    photo = models.URLField(blank=True, null=True)
-    starred_by = models.ManyToManyField(User, related_name="starred_achievements", blank=True)
 
     def __str__(self):
         return self.title

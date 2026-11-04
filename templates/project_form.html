@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    {% if achievement %}
-        <title>Edit Achievement - {{ name }}</title>
+    {% if project %}
+        <title>Edit Project - {{ name }}</title>
     {% else %}
-        <title>Add Achievement - {{ name }}</title>
+        <title>Tambah Project - {{ name }}</title>
     {% endif %}
 {% endblock meta %}
 
@@ -12,28 +12,25 @@
     <main>
         <section class="experience-section">
             <div class="container">
-                {% if achievement %}
-                    <h1>Edit Achievement</h1>
+                {% if project %}
+                    <h1>Edit Project</h1>
                 {% else %}
-                    <h1>Add New Achievement</h1>
+                    <h1>Tambah Project Baru</h1>
                 {% endif %}
 
                 <form method="post"
-                    {% if achievement %}
-                        action="{% url 'main:update_achievement' achievement.id %}"
-                    {% else %}
-                        action="{% url 'main:create_achievement' %}"
-                    {% endif %}
-                    class="experience-form">
+                      {% if project %}
+                          action="{% url 'main:update_project' project.id %}"
+                      {% else %}
+                          action="{% url 'main:create_project' %}"
+                      {% endif %}
+                      class="experience-form">
 
                     {% csrf_token %}
 
                     {% for field in form %}
                         <div class="form-group">
-                            <label for="{{ field.id_for_label }}">
-                                {{ field.label }}
-                            </label>
-
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                             {{ field }}
 
                             {% for error in field.errors %}
@@ -43,19 +40,18 @@
                     {% endfor %}
 
                     <button type="submit" class="button">
-                        {% if achievement %}
+                        {% if project %}
                             Simpan Perubahan
                         {% else %}
-                            Tambah Achievement
+                            Tambah Project
                         {% endif %}
                     </button>
 
-                    <a href="{% url 'main:show_achievement' %}"
-                        class="button button-secondary">
+                    <a href="{% url 'main:show_projects' %}"
+                       class="button button-secondary">
                         Batal
                     </a>
                 </form>
-
             </div>
         </section>
     </main>

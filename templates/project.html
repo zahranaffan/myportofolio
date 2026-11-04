@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>Zahran - Projects</title>
+{% endblock meta %}
+
+{% block content %}
+    <main>
+        <section class="experience-section" id="projects">
+            <div class="container">
+                <p class="section-kicker">Proyek yang pernah saya kerjakan</p>
+
+                <div class="project-header">
+                    <h1>Projects</h1>
+
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_project' %}"
+                           class="button project-add-button">
+                            <span aria-hidden="true">+</span>
+                            Tambah Project
+                        </a>
+                    {% endif %}
+                </div>
+
+                <form method="get" class="project-search">
+                    <input type="search"
+                           name="title"
+                           value="{{ title_query }}"
+                           placeholder="Cari berdasarkan nama project"
+                           class="project-search__input"
+                           aria-label="Cari berdasarkan nama project">
+                    <button type="submit" class="button">Cari</button>
+                </form>
+
+                {% if project_list %}
+                    <div class="experience-grid project-grid">
+                        {% for project in project_list %}
+                            <article class="experience-card">
+                                {% if project.project_image_url %}
+                                    <img src="{{ project.project_image_url }}"
+                                         alt="Gambar {{ project.title }}"
+                                         class="project-image"
+                                         loading="lazy">
+                                {% endif %}
+
+                                <h2>{{ project.title }}</h2>
+                                <span class="experience-category">{{ project.tech_stack }}</span>
+                                <p class="experience-description">{{ project.description }}</p>
+
+                                <div class="project-card-actions">
+                                    <div class="project-actions">
+                                        {% if project.project_url %}
+                                            <a href="{{ project.project_url }}"
+                                               class="button"
+                                               target="_blank"
+                                               rel="noopener noreferrer">
+                                                Buka Project
+                                            </a>
+                                        {% endif %}
+
+                                        {% if user.is_superuser %}
+                                            <a href="{% url 'main:update_project' project.id %}"
+                                               class="button">
+                                                Edit
+                                            </a>
+
+                                            <form method="post"
+                                                  action="{% url 'main:delete_project' project.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit"
+                                                        class="button button-danger"
+                                                        onclick="return confirm('Yakin ingin menghapus project ini?');">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="empty-state">
+                        <p>Belum ada project yang ditambahkan atau ditemukan.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+{% endblock content %}

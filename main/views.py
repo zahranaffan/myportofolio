@@ -6,8 +6,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from main.models import Experience, Achievement
-from main.forms import ExperienceForm, AchievementForm
+from main.models import Experience, Project
+from main.forms import ExperienceForm, ProjectForm
 
 import datetime
 from django.contrib.auth.decorators import login_required
@@ -154,134 +154,71 @@ def create_experience_ajax(request):
 
     return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
-def show_achievement(request):
+def show_projects(request):
     title_query = request.GET.get("title", "").strip()
-
-    context = {
-        "name": "Muhammad Zahran Affan",
-        "title_query": title_query,
-        "form": AchievementForm(),
-    }
-    return render(request, "achievement.html", context)
-
-@login_required(login_url="/login/")
-def create_achievement(request):
-    if not request.user.is_superuser:
-        raise PermissionDenied
-
-    form = AchievementForm(request.POST or None)
-
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "Achievement berhasil ditambahkan!")
-        return redirect("main:show_achievement")
-
-    context = {
-        "name": "Muhammad Zahran Affan",
-        "form": form,
-    }
-    return render(request, "achievement_form.html", context)
-
-@login_required(login_url="/login/")
-def update_achievement(request, achievement_id):
-    if not request.user.has_perm('main.change_achievement'):
-        raise PermissionDenied
-    achievement = get_object_or_404(Achievement, pk=achievement_id)
-
-    form = AchievementForm(request.POST or None, instance=achievement)
-
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "Achievement berhasil diperbarui!")
-        return redirect("main:show_achievement")
-
-    context = {
-        "name": "Muhammad Zahran Affan",
-        "form": form,
-        "achievement": achievement,
-    }
-
-    return render(request, "achievement_form.html", context)
-
-@login_required(login_url="/login/")
-def delete_achievement(request, achievement_id):
-    if not request.user.is_superuser:
-        raise PermissionDenied
-    achievement = get_object_or_404(Achievement, pk=achievement_id)
-
-    if request.method == "POST":
-        achievement.delete()
-        messages.success(request, "Achievement berhasil dihapus!")
-        return redirect("main:show_achievement")
-
-    return redirect("main:show_achievement")
-
-def get_achievement_json(request):
-    title_query = request.GET.get("title", "").strip()
-    achievements = Achievement.objects.prefetch_related('starred_by').all()
+    projects = Project.objects.all().order_by("title", "id")
 
     if title_query:
-        achievements = achievements.filter(title__icontains=title_query)
+        projects = projects.filter(title__icontains=title_query)
 
-    # Konstruksi data JSON secara manual agar bisa menyisipkan logika Star
-    data = []
-    for achievement in achievements:
-        starred_users = achievement.starred_by.all()
-        is_starred = request.user in starred_users if request.user.is_authenticated else False
-        starred_by_names = ", ".join([u.username for u in starred_users])
+    context = {
+        "name": "Muhammad Zahran Affan",
+        "project_list": projects,
+        "title_query": title_query,
+    }
+    return render(request, "project.html", context)
 
-        data.append({
-            "pk": str(achievement.id),
-            "fields": {
-                "title": achievement.title,
-                "description": achievement.description,
-                "year": achievement.year,
-                "organization": achievement.organization,
-                "category": achievement.category,
-                "photo": achievement.photo,
-                "star_count": starred_users.count(),
-                "is_starred": is_starred,
-                "starred_by_names": starred_by_names,
-            }
-        })
-
-    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
-def toggle_star_achievement(request, achievement_id):
-    achievement = get_object_or_404(Achievement, pk=achievement_id)
-
-    if request.method == "POST":
-        if request.user in achievement.starred_by.all():
-            achievement.starred_by.remove(request.user)
-        else:
-            achievement.starred_by.add(request.user)
-
-    return redirect("main:show_achievement")
-
-@require_POST
-def create_achievement_ajax(request):
+def create_project(request):
     if not request.user.is_superuser:
-        return JsonResponse(
-            {"message": "Hanya pemilik portofolio yang dapat menambahkan achievement."},
-            status=403,
-        )
+        raise PermissionDenied
 
-    form = AchievementForm(request.POST)
-    if form.is_valid():
-        achievement = form.save()
-        return JsonResponse(
-            {
-                "message": "Achievement berhasil ditambahkan.",
-                "pk": str(achievement.id),
-            },
-            status=201,
-        )
+    form = ProjectForm(request.POST or None)
 
-    return JsonResponse(
-        {"errors": form.errors.get_json_data()},
-        status=400,
-    )
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Project baru berhasil ditambahkan!")
+        return redirect("main:show_projects")
+
+    context = {
+        "name": "Muhammad Zahran Affan",
+        "form": form,
+    }
+    return render(request, "project_form.html", context)
+
+
+@login_required(login_url="/login/")
+def update_project(request, project_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    project = get_object_or_404(Project, pk=project_id)
+    form = ProjectForm(request.POST or None, instance=project)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Project berhasil diperbarui!")
+        return redirect("main:show_projects")
+
+    context = {
+        "name": "Muhammad Zahran Affan",
+        "form": form,
+        "project": project,
+    }
+    return render(request, "project_form.html", context)
+
+
+@login_required(login_url="/login/")
+@require_POST
+def delete_project(request, project_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+
+    project = get_object_or_404(Project, pk=project_id)
+    project.delete()
+    messages.success(request, "Project berhasil dihapus!")
+    return redirect("main:show_projects")
 
 def register(request):
     form = UserCreationForm(request.POST or None)

@@ -1,5 +1,5 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, DateTimeInput, NumberInput, Select
-from main.models import Experience, Achievement
+from django.forms import ModelForm, TextInput, Textarea, URLInput, DateTimeInput, Select
+from main.models import Experience, Project
 
 from django.core.exceptions import ValidationError
 from django.utils.html import strip_tags
@@ -64,53 +64,50 @@ class ExperienceForm(ModelForm):
     def clean_thumbnail(self):
         return strip_tags(self.cleaned_data["thumbnail"]).strip()
 
-class AchievementForm(ModelForm):
+class ProjectForm(ModelForm):
     class Meta:
-        model = Achievement
+        model = Project
         fields = [
             "title",
             "description",
-            "year",
-            "organization",
-            "category",
-            "photo",
+            "tech_stack",
+            "project_url",
+            "project_image_url",
         ]
 
         labels = {
-            "title": "Nama Pencapaian",
-            "description": "Deskripsi Pencapaian",
-            "year": "Tahun",
-            "organization": "Penyelenggara",
-            "category": "Kategori",
-            "photo": "URL Foto",
+            "title": "Nama Proyek",
+            "description": "Deskripsi Proyek",
+            "tech_stack": "Tech Stack",
+            "project_url": "URL Proyek",
+            "project_image_url": "URL Gambar Proyek",
         }
 
         widgets = {
             "title": TextInput(
                 attrs={
-                    "placeholder": "Contoh: Juara 1 Business Case Competition",
+                    "placeholder": "Contoh: Aplikasi Jadwal",
                     "maxlength": 255,
                 }
             ),
             "description": Textarea(
                 attrs={
-                    "placeholder": "Ceritakan pencapaianmu",
+                    "placeholder": "Ceritakan fungsi dan tujuan proyekmu",
                     "rows": 3,
                 }
             ),
-            "year": NumberInput(
+            "tech_stack": TextInput(
                 attrs={
-                    "placeholder": "2026",
-                }
-            ),
-            "organization": TextInput(
-                attrs={
-                    "placeholder": "Contoh: Universitas Indonesia",
+                    "placeholder": "Contoh: Django, Python, JavaScript",
                     "maxlength": 255,
                 }
             ),
-            "category": Select(),
-            "photo": URLInput(
+            "project_url": URLInput(
+                attrs={
+                    "placeholder": "https://example.com",
+                }
+            ),
+            "project_image_url": URLInput(
                 attrs={
                     "placeholder": "https://example.com/image.jpg",
                 }
@@ -120,11 +117,23 @@ class AchievementForm(ModelForm):
     def clean_title(self):
         title = strip_tags(self.cleaned_data["title"]).strip()
         if not title:
-            raise ValidationError("Nama pencapaian tidak boleh hanya berisi tag HTML.")
+            raise ValidationError("Nama proyek tidak boleh hanya berisi tag HTML.")
         return title
 
     def clean_description(self):
-        return strip_tags(self.cleaned_data["description"]).strip()
+        description = strip_tags(self.cleaned_data["description"]).strip()
+        if not description:
+            raise ValidationError("Deskripsi proyek tidak boleh hanya berisi tag HTML.")
+        return description
 
-    def clean_organization(self):
-        return strip_tags(self.cleaned_data["organization"]).strip()
+    def clean_tech_stack(self):
+        tech_stack = strip_tags(self.cleaned_data["tech_stack"]).strip()
+        if not tech_stack:
+            raise ValidationError("Tech stack tidak boleh hanya berisi tag HTML.")
+        return tech_stack
+
+    def clean_project_url(self):
+        return strip_tags(self.cleaned_data["project_url"]).strip()
+
+    def clean_project_image_url(self):
+        return strip_tags(self.cleaned_data["project_image_url"]).strip()
