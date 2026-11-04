@@ -156,7 +156,7 @@ def create_experience_ajax(request):
 
 def show_projects(request):
     title_query = request.GET.get("title", "").strip()
-    projects = Project.objects.all().order_by("title", "id")
+    projects = Project.objects.prefetch_related("starred_by").all().order_by("title", "id")
 
     if title_query:
         projects = projects.filter(title__icontains=title_query)
@@ -165,6 +165,7 @@ def show_projects(request):
         "name": "Muhammad Zahran Affan",
         "project_list": projects,
         "title_query": title_query,
+        "form": ProjectForm(),
     }
     return render(request, "project.html", context)
 
@@ -218,6 +219,19 @@ def delete_project(request, project_id):
     project = get_object_or_404(Project, pk=project_id)
     project.delete()
     messages.success(request, "Project berhasil dihapus!")
+    return redirect("main:show_projects")
+
+
+@login_required(login_url="/login/")
+def toggle_star_project(request, project_id):
+    project = get_object_or_404(Project, pk=project_id)
+
+    if request.method == "POST":
+        if request.user in project.starred_by.all():
+            project.starred_by.remove(request.user)
+        else:
+            project.starred_by.add(request.user)
+
     return redirect("main:show_projects")
 
 def register(request):

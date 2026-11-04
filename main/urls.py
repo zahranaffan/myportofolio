@@ -17,6 +17,7 @@ urlpatterns = [
     path("projects/add/", views.create_project, name="create_project"),
     path("projects/<uuid:project_id>/edit/", views.update_project, name="update_project"),
     path("projects/<uuid:project_id>/delete/", views.delete_project, name="delete_project"),
+    path("projects/<uuid:project_id>/star/", views.toggle_star_project, name="toggle_star_project"),
     path("register/", views.register, name="register"),
     path("login/", views.login_user, name="login"),
     path("logout/", views.logout_user, name="logout"),
