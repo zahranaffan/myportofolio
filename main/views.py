@@ -37,6 +37,13 @@ def show_experience(request):
         "name": "Muhammad Zahran Affan",
         "title_query": title_query,
         "form" : ExperienceForm(),
+        "can_change_experience": (
+            request.user.is_superuser
+            or (
+                request.user.is_authenticated
+                and request.user.groups.filter(name="Editor").exists()
+            )
+        ),
     }
     return render(request, "experience.html", context)
 
