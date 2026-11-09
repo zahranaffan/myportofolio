@@ -73,3 +73,25 @@ a. “Tolong jelaskan konsep debouncing dan kenapa diperlukan pada AJAX.”
 b. “Tolong sesuaikan kode get_projects_json ini menjadi versi Achievement.”
 
 c. “Bagian mana saja yang perlu menggunakan escapeHtml pada kode Achievement saya?”
+
+## Tugas 6
+
+### Tugas 6
+
+1. REST merupakan gaya arsitektur API yang mengatur komunikasi antara client dan server menggunakan HTTP. JSON saja belum cukup untuk disebut RESTful karena REST juga memiliki aturan penggunaan HTTP method dan pengelolaan resource. PUT digunakan untuk mengganti seluruh data, sedangkan PATCH hanya mengubah sebagian data. Contohnya, PUT untuk memperbarui seluruh informasi proyek dan PATCH untuk mengubah judulnya saja.
+
+2. Serializer pada DRF berfungsi mengubah data model Django menjadi JSON serta memvalidasi data yang diterima. Dibandingkan menggunakan JsonResponse dengan dictionary manual, serializer lebih praktis karena proses konversi dan validasi sudah tersedia sehingga kode lebih rapi.
+
+3. Autentikasi adalah proses memastikan identitas pengguna, sedangkan otorisasi menentukan hak aksesnya. Permission class diperlukan di server untuk memastikan setiap request sesuai dengan hak pengguna. Menyembunyikan tombol di template saja tidak cukup karena pengguna masih bisa mengakses API secara langsung.
+
+4. Pada SessionAuthentication, token CSRF diperlukan untuk memastikan request yang mengubah data berasal dari sumber yang sah. Hal ini karena browser mengirimkan cookie session secara otomatis. force_authenticate tidak cukup untuk menguji CSRF karena melewati proses login dan pemeriksaan CSRF. Karena itu, pengujian perlu menggunakan APIClient(enforce_csrf_checks=True) dan .login().
+
+AI Disclosure: Dalam pengerjaan tugas ini, saya menggunakan ChatGPT sebagai alat bantu untuk memahami materi Django REST Framework, khususnya konsep REST, serializer, autentikasi, otorisasi, dan CSRF. Saya menggunakan prompt yang spesifik untuk meminta penjelasan konsep, contoh penerapan, serta koreksi terhadap pemahaman dan jawaban reflektif. Hasil dari AI tidak langsung digunakan sepenuhnya karena penjelasannya terkadang terlalu umum atau kurang sesuai dengan konteks tutorial. Saya tetap memeriksa kembali informasi berdasarkan materi tutorial dan instruksi tugas, serta menyesuaikan jawaban menggunakan pemahaman sendiri.
+
+Contoh Prompt
+
+a. "Jelaskan konsep REST API dan perbedaan PUT dengan PATCH menggunakan contoh sederhana dalam konteks project Django saya."
+
+b. "Apa perbedaan autentikasi dan otorisasi di Django REST Framework? Jelaskan juga mengapa permission harus diperiksa di server."
+
+c. "Tolong periksa jawaban refleksi saya tentang serializer dan CSRF. Apakah konsepnya sudah benar dan sesuai materi Tutorial 07? Berikan koreksi jika ada yang kurang tepat."
